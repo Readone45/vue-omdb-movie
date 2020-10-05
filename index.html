@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Vue js & OmdbApi</title>
+	<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+	<div id="app">
+		<h1 class="title">{{ title }}</h1>
+
+		<div class="search">
+			<input type="text" placeholder="Search Movie" v-model="search" v-on:keyup.enter="click">
+			<button v-on:click="click">Search</button>
+		</div>
+
+		<h2 class="subtitle">{{ (search === "") ? "Movies" : "Search : "+search }}</h2>
+
+		<div class="card">
+			<ul>
+				<li v-for="movie in movies" :key="movies.imdbID"> 
+					<a href="#">
+						<div>
+							<img v-bind:src="movie.Poster">
+							<p>{{ movie.Title }}</p>
+							<span>{{ movie.Year }}</span>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<script type="text/javascript">
+	let vm = new Vue({
+		el : '#app',
+		methods : {
+			click(){
+				fetch('http://www.omdbapi.com/?s='+this.search+'&apikey=532fecd8')
+  				.then(response => response.json())
+  				.then(data => this.movies = data.Search );
+			}
+		},
+		data(){
+			return { 
+				movies : null,
+				title : "OmdbApi with Vue Js",
+				search : "",
+			}
+		},
+		mounted(){
+			fetch('http://www.omdbapi.com/?s=panda&plot=full&apikey=532fecd8')
+  			.then(response => response.json())
+  			.then(data => this.movies = data.Search );
+		}
+	});
+	
+	
+</script>
+</body>
+</html>
