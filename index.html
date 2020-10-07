@@ -13,7 +13,9 @@
 
 		<div class="search">
 			<input type="text" placeholder="Search Movie" v-model="search" v-on:keyup.enter="click">
-			<button v-on:click="click">Search</button>
+			<button v-on:click="click"> 
+				<span>Search</span>
+			</button>
 		</div>
 
 		<h2 class="subtitle">{{ (search === "") ? "Movies" : "Search : "+search }}</h2>
@@ -21,13 +23,13 @@
 		<div class="card">
 			<ul>
 				<li v-for="movie in movies" :key="movies.imdbID"> 
-					<a href="#">
-						<div>
+					
+						<div class="card-detail">
 							<img v-bind:src="movie.Poster">
 							<p>{{ movie.Title }}</p>
 							<span>{{ movie.Year }}</span>
 						</div>
-					</a>
+					
 				</li>
 			</ul>
 		</div>
